@@ -5,11 +5,12 @@
         public Cluster(int id) 
         { 
             this.Id = id;
+            this.Points = new HashSet<Point>(new PointEqualityComparer());
         }
 
         public int Id { get; }
       
-        public HashSet<Point> Points { get; } = new HashSet<Point>();
+        public HashSet<Point> Points { get; }
 
         public Point Centroid { get; internal set; }
 
