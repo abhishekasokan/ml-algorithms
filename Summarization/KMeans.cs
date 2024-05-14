@@ -9,7 +9,7 @@ namespace MLAlgorithms.Summarization
     {
         private const int SeedValue = 1;
 
-        public static (VBuffer<float>[], List<int>) GetCentroidsAndClusters(double[][] twoDVectors, int numberOfClusters)
+        public static (VBuffer<float>[], List<int>) GetCentroidsAndClusters(float[][] twoDVectors, int numberOfClusters)
         {
             var mlContext = new MLContext(SeedValue);
             var pipeline = mlContext.Clustering.Trainers.KMeans(
@@ -20,7 +20,7 @@ namespace MLAlgorithms.Summarization
                     NumberOfThreads = 1,
                 });
 
-            var trainingData = mlContext.Data.LoadFromEnumerable(twoDVectors.Select(values => new TrainingData { Features = Array.ConvertAll(values, Convert.ToSingle) }));
+            var trainingData = mlContext.Data.LoadFromEnumerable(twoDVectors.Select(values => new TrainingData { Features = values }));
             var model = pipeline.Fit(trainingData);
 
             // Using training data for test data.

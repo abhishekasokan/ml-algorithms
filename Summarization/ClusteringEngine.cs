@@ -4,7 +4,7 @@
     {
         private const int minNumberOfClusters = 2;
 
-        public int GetRecommendation(double[][] embeddings, int numberOfClusters)
+        public int GetRecommendation(float[][] embeddings, int numberOfClusters)
         {
             if (embeddings == null || embeddings.Length < minNumberOfClusters)
             {
@@ -16,7 +16,7 @@
                 throw new ArgumentException($"{nameof(numberOfClusters)} value is invalid");
             }
 
-            var result = new List<double>();
+            var result = new List<float>();
 
             for (int i = minNumberOfClusters; i <= numberOfClusters; i++)
             {

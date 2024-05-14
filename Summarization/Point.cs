@@ -2,15 +2,15 @@
 {
     public class Point
     {
-        public Point(double x, double y)
+        public Point(float x, float y)
         {
             this.X = x;
             this.Y = y;
         }
 
-        public double X { get; }
+        public float X { get; }
 
-        public double Y { get; }
+        public float Y { get; }
 
         public string Id => $"{X}|{Y}";
     }

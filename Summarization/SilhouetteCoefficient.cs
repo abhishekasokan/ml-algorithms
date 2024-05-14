@@ -11,10 +11,10 @@
             }
         }
 
-        public double Run()
+        public float Run()
         {
             // We store the silhouette coefficient (SC) for each cluster which is the average of the SC of all the points in the cluster. 
-            var clusterCoefficient = new Dictionary<int, double>();
+            var clusterCoefficient = new Dictionary<int, float>();
 
             foreach (var cluster in clustersLookup.Values)
             {
@@ -24,7 +24,7 @@
                     3. coefficient = (separation - cohesion) / max (separation, cohesion)
                 */
 
-                var pointCoefficient = new Dictionary<string, double>();
+                var pointCoefficient = new Dictionary<string, float>();
                 var otherCentroids = clustersLookup.Values.Where(c => c.Id != cluster.Id).Select(c => c.Centroid);
 
                 var pointCohesion = InitializePointCohesion(cluster);
@@ -32,10 +32,10 @@
                 for (int i = 0; i < clusterPoints.Count; i++)
                 {
                     var currentPoint = clusterPoints[i];
-                    double cohesionForCurrentPoint = pointCohesion[i];
+                    var cohesionForCurrentPoint = pointCohesion[i];
                     for (int j = i + 1; j < cluster.Points.Count; j++)
                     {
-                        var distance = Utils.GetDistance(currentPoint, clusterPoints[j]);
+                        var distance = Utils.GetDistanceAsFloat(currentPoint, clusterPoints[j]);
                         cohesionForCurrentPoint += distance;
 
                         // Distance from current point to next point is the same as distance from next point to current point.
@@ -44,10 +44,10 @@
                     }
                     cohesionForCurrentPoint = cohesionForCurrentPoint / cluster.Points.Count;
 
-                    var separationForCurrentPoint = double.MaxValue;
+                    var separationForCurrentPoint = float.MaxValue;
                     foreach (var centroid in otherCentroids)
                     {
-                        var currentSeparation = Utils.GetDistance(currentPoint, centroid);
+                        var currentSeparation = Utils.GetDistanceAsFloat(currentPoint, centroid);
                         separationForCurrentPoint = Math.Min(separationForCurrentPoint, currentSeparation);
                     }
 
@@ -61,9 +61,9 @@
             return clusterCoefficient.Values.Sum() / clusterCoefficient.Values.Count;
         }
 
-        private Dictionary<int, double> InitializePointCohesion(Cluster cluster)
+        private Dictionary<int, float> InitializePointCohesion(Cluster cluster)
         {
-            var cohesionLookup = new Dictionary<int, double>();
+            var cohesionLookup = new Dictionary<int, float>();
             for (int i = 0; i < cluster.Points.Count; i++)
             {
                 cohesionLookup.Add(i, 0);
