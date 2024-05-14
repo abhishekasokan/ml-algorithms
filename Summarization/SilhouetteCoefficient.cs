@@ -28,13 +28,14 @@
                 var otherCentroids = clustersLookup.Values.Where(c => c.Id != cluster.Id).Select(c => c.Centroid);
 
                 var pointCohesion = InitializePointCohesion(cluster);
-                for (int i = 0; i < cluster.Points.Count; i++)
+                var clusterPoints = cluster.Points.ToList();
+                for (int i = 0; i < clusterPoints.Count; i++)
                 {
-                    var currentPoint = cluster.Points[i];
+                    var currentPoint = clusterPoints[i];
                     double cohesionForCurrentPoint = pointCohesion[i];
                     for (int j = i + 1; j < cluster.Points.Count; j++)
                     {
-                        var distance = Utils.GetDistance(currentPoint, cluster.Points[j]);
+                        var distance = Utils.GetDistance(currentPoint, clusterPoints[j]);
                         cohesionForCurrentPoint += distance;
 
                         // Distance from current point to next point is the same as distance from next point to current point.
