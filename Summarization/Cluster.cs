@@ -12,7 +12,7 @@
       
         public HashSet<Point> Points { get; }
 
-        public Point Centroid { get; internal set; }
+        public Point Centroid { get; private set; }
 
         public void AddCentroid(Point point)
         {
